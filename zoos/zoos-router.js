@@ -20,6 +20,17 @@ router.get('/', async (req,res) => {
     }
 })
 
+router.get('/:id', async (req,res) => {
+    try {
+        const zoo = await db('zoos')
+            .where({ id: req.params.id })
+            .first()
+        res.status(200).json(zoo)    
+    } catch {
+        res.status(500).json(error)
+    }
+})
+
 router.post('/', async (req,res) => {
     try {
         const [id] = await db('zoos')
