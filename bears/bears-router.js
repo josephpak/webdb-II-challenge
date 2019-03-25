@@ -13,8 +13,8 @@ const db = knex(knexConfig)
 
 router.get('/', async (req,res) => {
     try {
-        const zoos = await db('zoos')
-        res.status(200).json(zoos) 
+        const bears = await db('bears')
+        res.status(200).json(bears) 
     } catch (error) {
         res.status(500).json(error)
     }
@@ -22,10 +22,10 @@ router.get('/', async (req,res) => {
 
 router.get('/:id', async (req,res) => {
     try {
-        const zoo = await db('zoos')
+        const bear = await db('bears')
             .where({ id: req.params.id })
             .first()
-        res.status(200).json(zoo)    
+        res.status(200).json(bear)    
     } catch {
         res.status(500).json(error)
     }
@@ -43,9 +43,9 @@ function propertyChecker(req,res,next) {
 
 router.post('/', propertyChecker, async (req,res) => {
     try {
-        const [id] = await db('zoos')
+        const [id] = await db('bears')
             .insert(req.body)
-        // const zoo = await db('zoos')
+        // const bear = await db('bears')
         //     .where({ id })
         //     .first()
         
@@ -57,18 +57,18 @@ router.post('/', propertyChecker, async (req,res) => {
 
 router.put('/:id', propertyChecker, async (req,res) => {
     try {
-        const count = await db('zoos')
+        const count = await db('bears')
             .where({ id: req.params.id })
             .update(req.body)
 
         if (count > 0) {
-            const zoo = await db('zoos')
+            const bear = await db('bears')
                 .where({id: req.params.id })
                 .first()
-            res.status(200).json(zoo)    
+            res.status(200).json(bear)    
         } else {
             res.status(404).json({
-                message: "Zoos not found"
+                message: "Bears not found"
             })
         }   
     } catch (error) {
@@ -78,7 +78,7 @@ router.put('/:id', propertyChecker, async (req,res) => {
 
 router.delete('/:id', async (req,res) => {
     try {
-        const count = await db('zoos')
+        const count = await db('bears')
             .where({ id: req.params.id })
             .del()
 
@@ -86,7 +86,7 @@ router.delete('/:id', async (req,res) => {
             res.status(200).json(count)
         } else {
             res.status(404).json({
-                message: "Zoo not found"
+                message: "Bear not found"
             })
         } 
     } catch (error) {
