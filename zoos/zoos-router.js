@@ -20,4 +20,18 @@ router.get('/', async (req,res) => {
     }
 })
 
+router.post('/', async (req,res) => {
+    try {
+        const [id] = await db('zoos')
+            .insert(req.body)
+        const zoo = await db('zoos')
+            .where({ id })
+            .first()
+        
+        res.status(201).json(zoo)
+    } catch (error) {
+        res.status(500).json(error)
+    }
+})
+
 module.exports = router
