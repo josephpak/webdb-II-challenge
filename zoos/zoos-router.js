@@ -9,4 +9,15 @@ const knexConfig = {
     }
 }
 
+const db = knex(knexConfig)
+
+router.get('/', async (req,res) => {
+    try {
+        const zoos = await db('zoos')
+        res.status(200).json(zoos) 
+    } catch (error) {
+        res.status(500).json(error)
+    }
+})
+
 module.exports = router
